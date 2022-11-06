@@ -1,0 +1,23 @@
+import numpy
+import spacy
+from datasets import load_dataset
+
+
+nlp = spacy.load("en_core_web_sm")
+
+def data_parser():
+    dataset = load_dataset('wikitext', 'wikitext-2-raw-v1', split='train')
+    documents = numpy.array()
+    counter=0
+    for text in dataset['text']:
+        doc = nlp(text)
+        documents.append(doc)
+        counter+=1
+        if counter>20:
+            break
+    return documents
+
+
+if __name__ == '__main__':
+    documents = data_parser()
+    print(documents)
